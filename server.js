@@ -58,7 +58,8 @@ app.post('/shoppingCarts/:userId/add',(req,res)=>{
 	let {productId,Amount,serviceDate,serviceSchedule,supplier,deliveryType,productCost}=req.body;
 	
 	/* Get Order Number if it exists */
-	let orderId = db('users').where('userId',userId).pluck('orderId');
+	let orderId = null;
+	db('users').where('userId',userId).pluck('orderId').then(function(id) { console.log(orderId = id&&id[0]); });;
 
 	if(!orderId){
 		//If Cart is not active then we'll create OrderId
@@ -70,7 +71,8 @@ app.post('/shoppingCarts/:userId/add',(req,res)=>{
 	'Amount' : Amount,'serviceDate' : serviceDate,
 	'serviceSchedule' : serviceSchedule,'supplier' : supplier,
 	'deliveryType' : deliveryType,'productCost' : productCost}).into('orders').catch(err=>{res.status(400).json('Failied')});
-
+	
+	console.log(orderId);
 	// Update OrderID if we have a new orderId 
 	db('users').update({'orderId':orderId}).where('userId','=',userId).then(res.status(200).json('orderId :'+orderId)).catch(err=>res.status(400).json('Failed to Issue'));
 	
