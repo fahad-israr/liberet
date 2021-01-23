@@ -64,6 +64,8 @@ app.post('/shoppingCarts/:userId/add',(req,res)=>{
 	if(!orderId){
 		//If Cart is not active then we'll create OrderId
 		orderId = userId+"_"+(new Date().toString()); //Make a unique OrderId using userId+currentTime
+		orderId = orderId.replace(/\s/g, ""); //Remove all whitespaces
+
 	} 
 	
 	// Insert Order into the Order Table:
@@ -91,7 +93,7 @@ app.delete(/shoppingCart/:userId/remove/:orderId/:productId)
 app.delete('/shoppingCarts/:userId/remove/:orderId/:productId',(req,res)=>{
 
 	let {userId,orderId,productId}=req.params; 
-	
+	console.log(orderId);
 	/*Delete from orders table */
 	db('orders').where('userId','=',userId).andWhere('orderId','=',orderId).andWhere('productId','=',productId).then(res.status(204).json('Success')).catch(err=>res.status(400).json('Failed'));
 	
