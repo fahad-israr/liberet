@@ -1,4 +1,4 @@
-# liberet
+# Liberet Corps
 ## A simple API to demonstrate an archetype for Lyberet Corps
 
 ## DBMS Used: ElephantSQL A cloud Service for postgreSQL
