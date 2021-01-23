@@ -1,0 +1,31 @@
+/*Create Table users
+
+userId          | name    | orderId
+----------------+---------+---------
+[Primary Key    |[string] | [string]
+Auto Inc        |
+Bigserial]      |
+--------+------+---------------------
+*/
+
+CREATE TABLE public.users
+(
+    "userId" bigserial NOT NULL,
+    name text,
+    "orderId" text,
+    PRIMARY KEY ("userId")
+)
+WITH (
+    OIDS = FALSE
+);
+
+ALTER TABLE public.users
+    OWNER to oxflytud;
+
+/*===Adding Data Into Users Table===*/
+insert into users(name)
+values('fahad');
+insert into users(name)
+values('liberet');
+insert into users(name)
+values('daniel');

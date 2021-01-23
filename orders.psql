@@ -1,0 +1,23 @@
+/*Creates orders table*/
+
+CREATE TABLE public.orders
+(
+    id bigint NOT NULL DEFAULT nextval('orders_id_seq'::regclass),
+    "orderId" text COLLATE pg_catalog."default",
+    "userId" text COLLATE pg_catalog."default",
+    "productId" text COLLATE pg_catalog."default",
+    "Amount" text COLLATE pg_catalog."default",
+    "serviceDate" text COLLATE pg_catalog."default",
+    "serviceSchedule" text COLLATE pg_catalog."default",
+    supplier text COLLATE pg_catalog."default",
+    "deliveryType" text COLLATE pg_catalog."default",
+    "productCost" text COLLATE pg_catalog."default",
+    CONSTRAINT orders_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.orders
+    OWNER to oxflytud;

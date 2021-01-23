@@ -4,14 +4,22 @@ const cors = require('cors');
 const knex = require('knex');
 const opn = require('opn');
 
-//opening front end on browser
-opn('http://localhost:5000', {app: 'chrome'});
+
+/*To  Launch UI:
+opn('http://localhost:3000', {app: 'chrome'});*/
 
 
-const db = knex({
+/*const db = knex({
   client: 'pg',
   connection: {
     connectionString : process.env.DATABASE_URL,
+    ssl:true
+  }
+});*/
+const db = knex({
+  client: 'pg',
+  connection: {
+    connectionString : "postgres://oxflytud:LIuP2WRT71oDkgq4ScZwuAgylfg4_ITH@ziggy.db.elephantsql.com:5432/oxflytud",
     ssl:true
   }
 });
@@ -134,6 +142,8 @@ totalCost: float
 }
 */
 app.get('/shoppingCart/:userId',(req,res)=>{
+	
+	console.log('Getting orders of this user');
 
 	let {userId}=req.params; 
 	// Get OrderId from users database
