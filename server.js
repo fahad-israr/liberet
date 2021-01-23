@@ -19,9 +19,9 @@ opn('http://localhost:3000', {app: 'chrome'});*/
 const db = knex({
   client: 'pg',
   connection: {
-    connectionString : "postgres://oxflytud:LIuP2WRT71oDkgq4ScZwuAgylfg4_ITH@ziggy.db.elephantsql.com:5432/oxflytud",
+    connectionString : process.env.DATABASE_URL||"postgres://oxflytud:LIuP2WRT71oDkgq4ScZwuAgylfg4_ITH@ziggy.db.elephantsql.com:5432/oxflytud",
     ssl:true
-  }
+	}
 });
 
 const app = express();
@@ -147,7 +147,8 @@ app.get('/shoppingCart/:userId',(req,res)=>{
 
 	let {userId}=req.params; 
 	// Get OrderId from users database
-	let orderId = db('users').where('userId',userId).pluck('orderId');
+	let orderId = "";
+	db('users').where('userId',userId).pluck('orderId').then(function(names) { console.log(orderId=names[0]); });
 	// Fetch Orders from Orders Table
 	db.select('*').from('orders').where('orderId','=',orderId).then(data=>res.status(200).send(data)).catch(err=>res.status(400));
 	
@@ -156,7 +157,23 @@ app.get('/shoppingCart/:userId',(req,res)=>{
 
 //=================================
 
+/*=================================
+Simple request to get user info*/
+app.get('/userinfo/:userId',(req,res)=>{
+	
+	console.log('Getting user info');
 
+	let {userId}=req.params; 
+
+	//db.table('users').pluck('name').then(function(names) { console.log(names); });
+	db('users').where('userId',userId).pluck('name').then(function(names) { console.log(names); });
+	//console.log(name);
+	// Fetch Users from Orders Table
+	db.select('*').from('users').where('userId','=',userId).then(data=>res.status(200).send(data)).catch(err=>res.status(400));
+	
+	});
+	
+/*===============================*/
 
 app.listen(process.env.PORT||3000, ()=> {
   console.log(`app is running on port ${process.env.PORT||3000}`);
